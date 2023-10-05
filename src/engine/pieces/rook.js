@@ -19,7 +19,7 @@ export default class Rook extends Piece {
         for (let direction of directions) {
             for (let i = 1; i < 8; i++) {
                 let potentialSquare = Square.at(location.row + i * direction.row, location.col + i * direction.col);
-                if (Square.onBoard(potentialSquare)) {
+                if (Square.onBoard(potentialSquare) && !board.getPiece(potentialSquare)) {
                     moves.push(potentialSquare);
                 } else {
                     break;
