@@ -1,5 +1,6 @@
 import Square from '../square';
 import Piece from './piece';
+import King from './king'
 
 export default class Rook extends Piece {
     constructor(player) {
@@ -19,10 +20,19 @@ export default class Rook extends Piece {
         for (let direction of directions) {
             for (let i = 1; i < 8; i++) {
                 let potentialSquare = Square.at(location.row + i * direction.row, location.col + i * direction.col);
-                if (Square.onBoard(potentialSquare) && !board.getPiece(potentialSquare)) {
-                    moves.push(potentialSquare);
-                } else {
+                if (!Square.onBoard(potentialSquare)) {
                     break;
+                }
+                if (!board.getPiece(potentialSquare)) {
+                    moves.push(potentialSquare);
+                    continue;
+                }
+                if (board.getPiece(potentialSquare).player !== this.player &&
+                    !(board.getPiece(potentialSquare) instanceof King)) {
+                    moves.push(potentialSquare);
+                    break;
+                } else {
+                    break
                 }
             }
         }
