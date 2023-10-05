@@ -8,11 +8,15 @@ export default class Pawn extends Piece {
     }
 
     getAvailableMoves(board) {
+        const moves = new Array(0)
         let location = board.findPiece(this)
-        if (this.player === Player.WHITE) {
-            return Square.at(location.row + 1, location.col)
-        } else {
-            return Square.at(location.row - 1, location.col)
+        let direction = this.player === Player.WHITE ? 1 : -1;
+        let startingRow = this.player === Player.WHITE ? 1 : 6;
+
+        moves.push(Square.at(location.row + 1 * direction, location.col))
+        if (location.row === startingRow) {
+            moves.push(Square.at(location.row + 2 * direction, location.col))
         }
+        return moves
     }
 }
