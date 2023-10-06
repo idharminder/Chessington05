@@ -4,8 +4,8 @@ import King from '../../../src/engine/pieces/king';
 import Knight from '../../../src/engine/pieces/knight';
 import Pawn from '../../../src/engine/pieces/pawn';
 import Player from '../../../src/engine/player';
-import Square from '../../../src/engine/square';
 import Rook from '../../../src/engine/pieces/rook';
+import Square from '../../../src/engine/square';
 
 
 
@@ -61,7 +61,7 @@ describe('Knight', () => {
         moves.should.deep.have.members(expectedMoves);
     });
 
-    it('can take opposing piece but not oppposing King and not npm runmove to own piece squares', () => {
+    it('can take opposing piece but not oppposing King and not take own piece squares', () => {
         const knight = new Knight(Player.WHITE);
         board.setPiece(Square.at(4, 4), knight);
 
