@@ -3,6 +3,9 @@ import King from '../../../src/engine/pieces/king';
 import Player from '../../../src/engine/player';
 import Square from '../../../src/engine/square';
 import Board from '../../../src/engine/board';
+import Pawn from '../../../src/engine/pieces/pawn';
+import Rook from '../../../src/engine/pieces/rook';
+import Queen from '../../../src/engine/pieces/rook';
 
 
 describe('King', () => {
@@ -43,4 +46,61 @@ describe('King', () => {
 
         moves.should.deep.have.members(expectedMoves);
     });
+
+    it('cannot move if there is a blocking own piece', () => {
+        const king = new King(Player.WHITE);
+        board.setPiece(Square.at(1, 4), king);
+
+        const blockingPiece1 = new Rook(Player.WHITE);
+        const blockingPiece2 = new Queen(Player.WHITE);
+        const blockingPiece3 = new Rook(Player.WHITE);
+        const blockingPiece4 = new Pawn(Player.WHITE);
+        const blockingPiece5 = new Pawn(Player.WHITE);
+        const blockingPiece6 = new Pawn(Player.WHITE);
+        const blockingPiece7 = new Pawn(Player.WHITE);
+        const blockingPiece8 = new Pawn(Player.WHITE);
+
+        board.setPiece(Square.at(0, 3), blockingPiece1);
+        board.setPiece(Square.at(0, 4), blockingPiece2);
+        board.setPiece(Square.at(0, 5), blockingPiece3);
+        board.setPiece(Square.at(1, 3), blockingPiece4);
+        board.setPiece(Square.at(1, 5), blockingPiece5);
+        board.setPiece(Square.at(2, 3), blockingPiece6);
+        board.setPiece(Square.at(2, 4), blockingPiece7);
+        board.setPiece(Square.at(2, 5), blockingPiece8);
+
+        const moves = king.getAvailableMoves(board);
+
+        moves.should.be.empty;
+    });
+
+    it('can take opposing piece', () => {
+        const king = new King(Player.WHITE);
+        board.setPiece(Square.at(1, 4), king);
+
+        const blockingPiece1 = new Rook(Player.BLACK);
+        const blockingPiece2 = new Queen(Player.WHITE);
+        const blockingPiece3 = new Rook(Player.WHITE);
+        const blockingPiece4 = new Pawn(Player.WHITE);
+        const blockingPiece5 = new Pawn(Player.WHITE);
+        const blockingPiece6 = new Pawn(Player.WHITE);
+        const blockingPiece7 = new Pawn(Player.BLACK);
+        const blockingPiece8 = new Pawn(Player.WHITE);
+
+        board.setPiece(Square.at(0, 3), blockingPiece1);
+        board.setPiece(Square.at(0, 4), blockingPiece2);
+        board.setPiece(Square.at(0, 5), blockingPiece3);
+        board.setPiece(Square.at(1, 3), blockingPiece4);
+        board.setPiece(Square.at(1, 5), blockingPiece5);
+        board.setPiece(Square.at(2, 3), blockingPiece6);
+        board.setPiece(Square.at(2, 4), blockingPiece7);
+        board.setPiece(Square.at(2, 5), blockingPiece8);
+
+        const moves = king.getAvailableMoves(board);
+
+        const expectedMoves = [Square.at(0, 3), Square.at(2, 4)];
+
+        moves.should.deep.have.members(expectedMoves);
+    });
+
 });
