@@ -5,7 +5,7 @@ import Square from '../../../src/engine/square';
 import Board from '../../../src/engine/board';
 import Pawn from '../../../src/engine/pieces/pawn';
 import Rook from '../../../src/engine/pieces/rook';
-import Queen from '../../../src/engine/pieces/rook';
+import Queen from '../../../src/engine/pieces/queen';
 
 
 describe('King', () => {

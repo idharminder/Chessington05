@@ -1,9 +1,12 @@
-import Knight from '../../../src/engine/pieces/knight';
 import 'chai/register-should';
+import Board from '../../../src/engine/board';
+import King from '../../../src/engine/pieces/king';
+import Knight from '../../../src/engine/pieces/knight';
 import Pawn from '../../../src/engine/pieces/pawn';
 import Player from '../../../src/engine/player';
 import Square from '../../../src/engine/square';
-import Board from '../../../src/engine/board';
+import Rook from '../../../src/engine/pieces/rook';
+
 
 
 describe('Knight', () => {
@@ -57,4 +60,37 @@ describe('Knight', () => {
 
         moves.should.deep.have.members(expectedMoves);
     });
+
+    it('can take opposing piece but not oppposing King and not npm runmove to own piece squares', () => {
+        const knight = new Knight(Player.WHITE);
+        board.setPiece(Square.at(4, 4), knight);
+
+
+        const ownPiece1 = new Rook(Player.WHITE);
+        const opposingKingPiece2 = new King(Player.BLACK);
+        const capturePiece3 = new Rook(Player.BLACK);
+        const ownPiece4 = new Pawn(Player.WHITE);
+        const capturePiece5 = new Pawn(Player.BLACK);
+        const ownPiece6 = new Pawn(Player.WHITE);
+        const capturePiece7 = new Pawn(Player.BLACK);
+        const ownPiece8 = new Pawn(Player.WHITE);
+
+        board.setPiece(Square.at(2, 5), ownPiece1);
+        board.setPiece(Square.at(2, 3), opposingKingPiece2);
+        board.setPiece(Square.at(3, 6), capturePiece3);
+        board.setPiece(Square.at(3, 2), ownPiece4);
+        board.setPiece(Square.at(5, 6), capturePiece5);
+        board.setPiece(Square.at(5, 2), ownPiece6);
+        board.setPiece(Square.at(6, 5), capturePiece7);
+        board.setPiece(Square.at(6, 3), ownPiece8);
+
+        const moves = knight.getAvailableMoves(board);
+
+        const expectedMoves = [
+            Square.at(3, 6),Square.at(5, 6), Square.at(6, 5),
+        ];
+
+        moves.should.deep.include.members(expectedMoves);
+    });
+
 });
